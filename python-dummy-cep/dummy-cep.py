@@ -15,14 +15,14 @@ def generateUUID():
     myuuid = uuid.uuid4()
     return str(myuuid)
 	
-def postToCamunda(msgname, correlationKey, myuuid):
+def postToCamunda(msgname, processInstanceId):
     print('(THREAD) sleeping 3 seconds...')
     time.sleep(3)
     print('(THREAD) posting to camunda.')
     
-    correlationKeys = { correlationKey : {"value" : myuuid, "type": "String"} }
     processVariables = {"eventBody" : {"value" : "test1234", "type": "String"}}
-    myJson = {"messageName": msgname, "correlationKeys": correlationKeys, "processVariables" : processVariables}
+    
+    myJson = {"messageName": msgname, "processInstanceId": processInstanceId, "processVariables" : processVariables}
     requests.post(CAMUNDA_MSG_URL, json=myJson)
     print('(THREAD) done.')
 
@@ -35,12 +35,12 @@ def get_getuuid():
 @app.route('/cep/subscription', methods=['POST'])
 def create_subscription():
     msgname = request.json['msgName']
-    correlationKey = request.json['correlationKey']
-    print ('Received: ' + msgname + ',' + correlationKey)
+    instanceId = request.json['processInstanceId']
+    print ('Received: ' + msgname + ',' + instanceId)
     myuuid = generateUUID()
-    print('correlating via: ' + myuuid)
+    print('New subscription with id: ' + myuuid)
 
-    _thread.start_new_thread( postToCamunda, (msgname, correlationKey, myuuid) )
+    _thread.start_new_thread( postToCamunda, (msgname, instanceId) )
 
     return myuuid
 	 
