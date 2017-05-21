@@ -28,19 +28,21 @@ public class SubscriptionDelegate implements JavaDelegate {
 	public void execute(DelegateExecution execution) throws Exception {
 		LOGGER.info("Subscribing to events on localhost.");
 
-		String processID = (String) execution.getVariable("processID");
-		String messageName = (String) execution.getVariable("messageName");
-		LOGGER.info("Process ID: " + processID + "; Message Name: " + messageName);
+		String buffProcessID = execution.getProcessInstanceId();
+		String messageName = "event-to-buffer";
+		LOGGER.info("Process ID: " + buffProcessID + "; Message Name: " + messageName);
 
-		String correlationVarName = "correlation" + System.currentTimeMillis() + Math.round(Math.random() * 10000);
+		// we must set the processInstanceId as a Process Variable to allow
+		// correlation
+		execution.setVariable("correlation-piid", buffProcessID);
 
-		String response = doPost(messageName, correlationVarName);
-		execution.setVariable(correlationVarName, response);
-		LOGGER.info("Correlating via subscription-ID: " + response);
+		String response = doPost(messageName, buffProcessID);
+
+		LOGGER.info("Subscription-ID: " + response);
 	}
 
 	// HTTP GET request
-	private String doPost(String msgName, String correlationKey) throws Exception {
+	private String doPost(String msgName, String processInstanceID) throws Exception {
 		String url = "http://localhost:5000/cep/subscription";
 
 		URL obj = new URL(url);
@@ -50,7 +52,7 @@ public class SubscriptionDelegate implements JavaDelegate {
 		con.setRequestMethod("POST");
 		con.setRequestProperty("Content-Type", "application/json");
 
-		String jsonBody = "{\"msgName\":\"" + msgName + "\",\"correlationKey\":\"" + correlationKey + "\"}";
+		String jsonBody = "{\"msgName\":\"" + msgName + "\",\"processInstanceId\":\"" + processInstanceID + "\"}";
 
 		OutputStream os = con.getOutputStream();
 		os.write(jsonBody.getBytes());
