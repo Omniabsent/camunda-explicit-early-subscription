@@ -13,6 +13,6 @@ target/
 hs_err_pid*
 
 # eclipse stuff
-early-subscription-process/.classpath
-early-subscription-process/.project
-early-subscription-process/.settings/
+.classpath
+.project
+*/.settings/
