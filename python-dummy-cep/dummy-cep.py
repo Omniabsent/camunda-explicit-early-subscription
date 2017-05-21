@@ -19,7 +19,11 @@ def postToCamunda(msgname, correlationKey, myuuid):
     print('(THREAD) sleeping 3 seconds...')
     time.sleep(3)
     print('(THREAD) posting to camunda.')
-    requests.post(CAMUNDA_MSG_URL, json={"messageName": msgname, "correlationKeys": { correlationKey : {"value" : myuuid, "type": "String"} }})
+    
+    correlationKeys = { correlationKey : {"value" : myuuid, "type": "String"} }
+    processVariables = {"eventBody" : {"value" : "test1234", "type": "String"}}
+    myJson = {"messageName": msgname, "correlationKeys": correlationKeys, "processVariables" : processVariables}
+    requests.post(CAMUNDA_MSG_URL, json=myJson)
     print('(THREAD) done.')
 
 @app.route('/cep/getuuid', methods=['GET'])
