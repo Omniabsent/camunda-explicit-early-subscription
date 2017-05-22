@@ -4,12 +4,14 @@ from flask import request
 from multiprocessing import Process
 import uuid
 import requests
-import _thread
+import _thread, sys
 import time
+import re
 
 CAMUNDA_MSG_URL = 'http://localhost:8080/engine-rest/message'
 
 runProgram = True
+listSubscriptions = [] # list of (myuuid, instanceId, msgname)
 
 # API
 app = Flask(__name__)
@@ -26,34 +28,32 @@ def create_subscription():
 	instanceId = request.json['processInstanceId']
 	print ('Received: ' + msgname + ',' + instanceId)
 	myuuid = generateUUID()
-	print('New subscription with id: ' + myuuid)
+	
+	# add to subscriptions
+	global listSubscriptions
+	print('New subscription ' + str(len(listSubscriptions)) + ' with uuid: ' + myuuid)
 
-	_thread.start_new_thread( postToCamunda, (msgname, instanceId) )
+	listSubscriptions.append((myuuid, instanceId, msgname))
 
 	return myuuid
 
 def runFlaskServer():
     app.run(debug=False)
 	
-def stopFlaskServer(server):
-	server.terminate()
-	server.join()
-	
 # GENERAL CODE
 def generateUUID():
 	myuuid = uuid.uuid4()
 	return str(myuuid)
 
-def postToCamunda(msgname, processInstanceId):
-	print('(THREAD) sleeping 3 seconds...')
-	time.sleep(3)
-	print('(THREAD) posting to camunda.')
-	
-	processVariables = {"eventBody" : {"value" : "test1234", "type": "String"}}
+def postMessageToSubscription(subscription, message):
+	msgname = subscription[2]
+	processInstanceId = subscription[1]
+	print ('posting to Camunda')
+	processVariables = {"eventBody" : {"value" : message, "type": "String"}}
 	
 	myJson = {"messageName": msgname, "processInstanceId": processInstanceId, "processVariables" : processVariables}
 	requests.post(CAMUNDA_MSG_URL, json=myJson)
-	print('(THREAD) done.')
+	print('POST done.')
 	
 # User interface
 def runUserInterface():
@@ -62,21 +62,33 @@ def runUserInterface():
 		interpretLine(userinput)
 
 def interpretLine(userinput):
+	global listSubscriptions # list of (myuuid, instanceId, msgname)
 	if userinput == 'q':
 		global runProgram
 		runProgram = False
+	elif userinput == 'ls':
+		print (listSubscriptions)		
+	elif re.match('\d+ .+', userinput):
+		subscriptionIndex = int(userinput[:userinput.find(' ')])
+		message = userinput[(userinput.find(' ')+1):]
+		
+		# post to camunda
+		subscription = listSubscriptions[subscriptionIndex] 
+		postMessageToSubscription(subscription, message)
+	elif userinput == '':
+		True #do nothing
 	else:
-		print('You typed ' + userinput)
+		print('invalid input. type one of the following: q, ls, \'\\d+ .*\'')
 
+# main
 if __name__ == '__main__':
 	# start the flask API server in a seperate process
-	server = Process(target=runFlaskServer)
-	server.start()
+	_thread.start_new_thread( runFlaskServer, () )
 	time.sleep(2)
 	
 	# run the user-interface until the user quits
 	runUserInterface()
 	
 	# stop and exit
-	stopFlaskServer(server)
-	print ('Dummy CEC exited.')	
+	print ('Dummy CEP exited.')
+	sys.exit(0)
