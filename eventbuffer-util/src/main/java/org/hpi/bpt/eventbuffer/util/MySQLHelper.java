@@ -60,8 +60,6 @@ public class MySQLHelper {
 			// read first line of result
 			if (rs.next()) {
 				result = rs.getString(1);
-			} else {
-				LOGGER.info("No event could be found.");
 			}
 			st.close();
 		} catch (Exception e) {
