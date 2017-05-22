@@ -43,7 +43,7 @@
   </bpmn:process>
   <bpmn:message id="Message_075p6qa" name="unsubscribe" />
   <bpmn:message id="Message_130nqvw" name="event-to-buffer" />
-  <bpmn:message id="Message_0qnw048" name="start-event" />
+  <bpmn:message id="Message_0qnw048" name="buffering-task" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="buffering-process">
       <bpmndi:BPMNShape id="ServiceTask_1q9xsi1_di" bpmnElement="Task_0v3tco3">
