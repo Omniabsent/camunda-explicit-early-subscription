@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.6.0">
   <bpmn:process id="eventbuffer-delivery" name="Eventbuffer Delivery" isExecutable="true">
-    <bpmn:sequenceFlow id="SequenceFlow_1q4ilfz" sourceRef="StartEvent_1" targetRef="Task_0dvteeg" />
+    <bpmn:sequenceFlow id="SequenceFlow_1q4ilfz" sourceRef="StartEvent_1" targetRef="IntermediateTimerEvent_1au3amv" />
     <bpmn:serviceTask id="Task_0dvteeg" name="Retrieve event from buffer" camunda:class="org.hpi.bpt.eventbuffer.camundaprocesses.eventbufferdelivery.EventRetrievalDelegate">
-      <bpmn:incoming>SequenceFlow_1q4ilfz</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0l24s6d</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1bfjz81</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_1w07v32">
         <bpmn:targetRef>DataStoreReference_1k2mlds</bpmn:targetRef>
@@ -24,6 +24,14 @@
       <bpmn:incoming>SequenceFlow_1sip0mt</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1sip0mt" sourceRef="IntermediateThrowEvent_01hh7n2" targetRef="EndEvent_1e6tqmg" />
+    <bpmn:sequenceFlow id="SequenceFlow_0l24s6d" sourceRef="IntermediateTimerEvent_1au3amv" targetRef="Task_0dvteeg" />
+    <bpmn:intermediateCatchEvent id="IntermediateTimerEvent_1au3amv" name="Delay Timer">
+      <bpmn:incoming>SequenceFlow_1q4ilfz</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0l24s6d</bpmn:outgoing>
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT0.5S</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
     <bpmn:textAnnotation id="TextAnnotation_19c9w8f">    <bpmn:text>sets ref_processInstanceId, event_messageName, event_processDefinitionId</bpmn:text>
 </bpmn:textAnnotation>
     <bpmn:association id="Association_0kk71x6" sourceRef="StartEvent_1" targetRef="TextAnnotation_19c9w8f" />
@@ -36,10 +44,10 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="eventbuffer-delivery">
       <bpmndi:BPMNEdge id="SequenceFlow_1q4ilfz_di" bpmnElement="SequenceFlow_1q4ilfz">
-        <di:waypoint xsi:type="dc:Point" x="336" y="256" />
-        <di:waypoint xsi:type="dc:Point" x="428" y="256" />
+        <di:waypoint xsi:type="dc:Point" x="283" y="256" />
+        <di:waypoint xsi:type="dc:Point" x="337" y="256" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="382" y="241" width="0" height="0" />
+          <dc:Bounds x="310" y="241" width="0" height="0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_08ny4v8_di" bpmnElement="Task_0dvteeg">
@@ -69,9 +77,9 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="StartEvent_0qy5xdh_di" bpmnElement="StartEvent_1">
-        <dc:Bounds x="300" y="238" width="36" height="36" />
+        <dc:Bounds x="247" y="238" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="281" y="274" width="74" height="37" />
+          <dc:Bounds x="228" y="274" width="74" height="37" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_1e6tqmg_di" bpmnElement="EndEvent_1e6tqmg">
@@ -88,11 +96,11 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_19c9w8f_di" bpmnElement="TextAnnotation_19c9w8f">
-        <dc:Bounds x="234" y="130" width="168" height="84" />
+        <dc:Bounds x="181" y="130" width="168" height="84" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_0kk71x6_di" bpmnElement="Association_0kk71x6">
-        <di:waypoint xsi:type="dc:Point" x="318" y="238" />
-        <di:waypoint xsi:type="dc:Point" x="318" y="214" />
+        <di:waypoint xsi:type="dc:Point" x="265" y="238" />
+        <di:waypoint xsi:type="dc:Point" x="265" y="214" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_1z0xyw2_di" bpmnElement="TextAnnotation_1z0xyw2">
         <dc:Bounds x="557" y="126" width="178" height="91" />
@@ -101,6 +109,19 @@
         <di:waypoint xsi:type="dc:Point" x="646" y="238" />
         <di:waypoint xsi:type="dc:Point" x="646" y="217" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0l24s6d_di" bpmnElement="SequenceFlow_0l24s6d">
+        <di:waypoint xsi:type="dc:Point" x="373" y="256" />
+        <di:waypoint xsi:type="dc:Point" x="428" y="256" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="401" y="241" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_06qc9i7_di" bpmnElement="IntermediateTimerEvent_1au3amv">
+        <dc:Bounds x="337" y="238" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="325" y="274" width="59" height="13" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

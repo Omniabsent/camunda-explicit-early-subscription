@@ -36,6 +36,7 @@ public class MySQLHelper {
 
 			conn.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 			LOGGER.info("Exception while writing to MySQL: " + e.getMessage());
 		}
 	}
@@ -59,6 +60,8 @@ public class MySQLHelper {
 			// read first line of result
 			if (rs.next()) {
 				result = rs.getString(1);
+			} else {
+				LOGGER.info("No event could be found.");
 			}
 			st.close();
 		} catch (Exception e) {

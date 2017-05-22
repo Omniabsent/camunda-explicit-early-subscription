@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.6.0">
+  <bpmn:process id="generic-buffered-process" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Generic Process Start Event">
+      <bpmn:outgoing>SequenceFlow_1n8qkg5</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1n8qkg5" sourceRef="StartEvent_1" targetRef="IntermediateCatchEvent_199v7vk" />
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_199v7vk" name="Receive generic event">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="org.hpi.bpt.eventbuffer.util.TriggerBufferDeliveryDelegate" event="start">
+          <camunda:field name="exp_messageName">          <camunda:string>generic-event</camunda:string>
+</camunda:field>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1n8qkg5</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_114tytj</bpmn:outgoing>
+      <bpmn:messageEventDefinition messageRef="Message_129fcmh" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="EndEvent_1ad5j32" name="process end">
+      <bpmn:incoming>SequenceFlow_0ejladj</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_114tytj" sourceRef="IntermediateCatchEvent_199v7vk" targetRef="Task_0n7v4on" />
+    <bpmn:sequenceFlow id="SequenceFlow_0ejladj" sourceRef="Task_0n7v4on" targetRef="EndEvent_1ad5j32" />
+    <bpmn:scriptTask id="Task_0n7v4on" name="print event message to console" scriptFormat="groovy">
+      <bpmn:incoming>SequenceFlow_114tytj</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0ejladj</bpmn:outgoing>
+      <bpmn:script><![CDATA[println "Received event-message:"
+println eventMessage]]></bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:textAnnotation id="TextAnnotation_0v3u7qw">    <bpmn:text><![CDATA[sets 'eventMessage' process Variable]]></bpmn:text>
+</bpmn:textAnnotation>
+    <bpmn:association id="Association_05gycll" sourceRef="IntermediateCatchEvent_199v7vk" targetRef="TextAnnotation_0v3u7qw" />
+    <bpmn:textAnnotation id="TextAnnotation_10xh9id">    <bpmn:text>Triggers buffered events delivery in Execution Listener</bpmn:text>
+</bpmn:textAnnotation>
+    <bpmn:association id="Association_0zyk58f" sourceRef="IntermediateCatchEvent_199v7vk" targetRef="TextAnnotation_10xh9id" />
+  </bpmn:process>
+  <bpmn:message id="Message_129fcmh" name="generic-event" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="generic-buffered-process">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="456" y="316" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="431" y="352" width="85" height="24" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1n8qkg5_di" bpmnElement="SequenceFlow_1n8qkg5">
+        <di:waypoint xsi:type="dc:Point" x="492" y="334" />
+        <di:waypoint xsi:type="dc:Point" x="592" y="334" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="542" y="319" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_04f2q6f_di" bpmnElement="IntermediateCatchEvent_199v7vk">
+        <dc:Bounds x="592" y="316" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="569" y="352" width="82" height="24" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1ad5j32_di" bpmnElement="EndEvent_1ad5j32">
+        <dc:Bounds x="916" y="316" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="904" y="352" width="60" height="13" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_114tytj_di" bpmnElement="SequenceFlow_114tytj">
+        <di:waypoint xsi:type="dc:Point" x="628" y="334" />
+        <di:waypoint xsi:type="dc:Point" x="723" y="334" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="676" y="319" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ejladj_di" bpmnElement="SequenceFlow_0ejladj">
+        <di:waypoint xsi:type="dc:Point" x="823" y="334" />
+        <di:waypoint xsi:type="dc:Point" x="916" y="334" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="870" y="319" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ScriptTask_001frog_di" bpmnElement="Task_0n7v4on">
+        <dc:Bounds x="723" y="294" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0v3u7qw_di" bpmnElement="TextAnnotation_0v3u7qw">
+        <dc:Bounds x="638" y="184" width="129" height="57" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_05gycll_di" bpmnElement="Association_05gycll">
+        <di:waypoint xsi:type="dc:Point" x="611" y="316" />
+        <di:waypoint xsi:type="dc:Point" x="678" y="241" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_10xh9id_di" bpmnElement="TextAnnotation_10xh9id">
+        <dc:Bounds x="459" y="186" width="140" height="53" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0zyk58f_di" bpmnElement="Association_0zyk58f">
+        <di:waypoint xsi:type="dc:Point" x="600" y="319" />
+        <di:waypoint xsi:type="dc:Point" x="546" y="239" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
