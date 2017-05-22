@@ -21,12 +21,10 @@ public class WriteToMySQLDelegate implements JavaDelegate {
 		String eventBody = (String) execution.getVariable("eventBody");
 		LOGGER.info("Process ID: " + processId + "; Message Name: " + messageName + "; eventBody: " + eventBody);
 
-		String dbKey = processId + "-" + messageName;
-
-		writeToMySQL(dbKey, eventBody, processId, messageName);
+		writeToMySQL(eventBody, processId, messageName);
 	}
 
-	public void writeToMySQL(String dbkey, String eventBody, String processId, String messageName) {
+	public void writeToMySQL(String eventBody, String processId, String messageName) {
 		try {
 			// create a mysql database connection
 			String myDriver = "org.gjt.mm.mysql.Driver";
@@ -35,16 +33,16 @@ public class WriteToMySQLDelegate implements JavaDelegate {
 			Connection conn = DriverManager.getConnection(myUrl, "root", "");
 
 			// the mysql insert statement
-			String query = " insert into events (pkey, eventBody, eventOccurrenceTime, messageName, processInstanceId)"
-					+ " values (?, ?, ?, ?, ?)";
+			String query = " insert into events (eventBody, eventOccurrenceTime, messageName, processInstanceId)"
+					+ " values (?, ?, ?, ?)";
 
 			// create the mysql insert preparedstatement
 			PreparedStatement preparedStmt = conn.prepareStatement(query);
-			preparedStmt.setString(1, dbkey);
-			preparedStmt.setString(2, eventBody);
-			preparedStmt.setLong(3, System.currentTimeMillis());
-			preparedStmt.setString(4, messageName);
-			preparedStmt.setString(5, processId);
+			int i = 1;
+			preparedStmt.setString(i++, eventBody);
+			preparedStmt.setLong(i++, System.currentTimeMillis());
+			preparedStmt.setString(i++, messageName);
+			preparedStmt.setString(i++, processId);
 
 			// execute the preparedstatement
 			preparedStmt.execute();
