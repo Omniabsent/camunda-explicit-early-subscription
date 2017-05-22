@@ -31,7 +31,7 @@
       <bpmn:outgoing>SequenceFlow_1u2ia09</bpmn:outgoing>
     </bpmn:receiveTask>
     <bpmn:sequenceFlow id="SequenceFlow_1u2ia09" sourceRef="Task_12nk9br" targetRef="EndEvent_0fdaoro" />
-    <bpmn:textAnnotation id="TextAnnotation_16zufff">    <bpmn:text>should implicitely set bufferedMessage_piid and bufferedMessage_name</bpmn:text>
+    <bpmn:textAnnotation id="TextAnnotation_16zufff">    <bpmn:text>should implicitely set ref_processDefinitionId and ref_messageName</bpmn:text>
 </bpmn:textAnnotation>
     <bpmn:association id="Association_1055ycd" sourceRef="StartEvent_1" targetRef="TextAnnotation_16zufff" />
     <bpmn:textAnnotation id="TextAnnotation_1vp6wn3">    <bpmn:text><![CDATA[Sets 'eventBody' processVariable]]></bpmn:text>

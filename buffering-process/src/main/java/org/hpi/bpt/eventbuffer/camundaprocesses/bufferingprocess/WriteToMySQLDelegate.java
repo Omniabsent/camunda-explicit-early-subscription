@@ -16,8 +16,8 @@ public class WriteToMySQLDelegate implements JavaDelegate {
 	public void execute(DelegateExecution execution) throws Exception {
 		LOGGER.info("Writing event data to MySQL. " + MYSQL_ADDRESS);
 
-		String processId = (String) execution.getVariable("bufferedMessage_piid");
-		String messageName = (String) execution.getVariable("bufferedMessage_name");
+		String processId = (String) execution.getVariable("ref_processDefinitionId");
+		String messageName = (String) execution.getVariable("ref_messageName");
 		String eventBody = (String) execution.getVariable("eventBody");
 		LOGGER.info("Process ID: " + processId + "; Message Name: " + messageName + "; eventBody: " + eventBody);
 
@@ -33,7 +33,7 @@ public class WriteToMySQLDelegate implements JavaDelegate {
 			Connection conn = DriverManager.getConnection(myUrl, "root", "");
 
 			// the mysql insert statement
-			String query = " insert into events (eventBody, eventOccurrenceTime, messageName, processInstanceId)"
+			String query = " insert into events (eventBody, eventOccurrenceTime, messageName, processDefinitionId)"
 					+ " values (?, ?, ?, ?)";
 
 			// create the mysql insert preparedstatement
