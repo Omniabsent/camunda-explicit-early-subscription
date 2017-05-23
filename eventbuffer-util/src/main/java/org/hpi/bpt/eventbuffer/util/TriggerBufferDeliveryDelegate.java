@@ -8,7 +8,7 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 
 /**
  * Triggers the delivery of buffered events by sending a start event message
- * "buffering-task" which instantiates a buffering-process
+ * "buffering-event-delivery-task" which instantiates a buffer-delivery-process
  * 
  * @author Dennis
  *

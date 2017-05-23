@@ -32,7 +32,11 @@ public class SubscriptionDelegate implements JavaDelegate {
 		// correlation
 		execution.setVariable("correlation-piid", buffProcessID);
 
-		String response = HTTPHelper.doPost(messageName, buffProcessID);
+		String response = null;
+		while ((response = HTTPHelper.doPost(messageName, buffProcessID)) == null) {
+			LOGGER.info("Retry connection to CEP after 3 seconds...");
+			Thread.sleep(3000);
+		}
 
 		LOGGER.info("Subscription-ID: " + response);
 	}

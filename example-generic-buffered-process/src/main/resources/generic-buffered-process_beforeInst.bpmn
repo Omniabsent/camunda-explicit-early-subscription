@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.6.0">
-  <bpmn:process id="generic-buffered-process" isExecutable="true">
+  <bpmn:process id="example_buffProcces_beforeInst" name="(1A) Generic Buffered Process (&#60; Pr. Inst)" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1" name="Generic Process Start Event">
       <bpmn:outgoing>SequenceFlow_1n8qkg5</bpmn:outgoing>
     </bpmn:startEvent>
@@ -8,7 +8,7 @@
     <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_199v7vk" name="Receive generic event">
       <bpmn:extensionElements>
         <camunda:executionListener class="org.hpi.bpt.eventbuffer.util.TriggerBufferDeliveryDelegate" event="start">
-          <camunda:field name="exp_messageName">          <camunda:string>generic-event</camunda:string>
+          <camunda:field name="exp_messageName">          <camunda:string>generic-event-1a</camunda:string>
 </camunda:field>
         </camunda:executionListener>
       </bpmn:extensionElements>
@@ -30,13 +30,13 @@ println eventMessage]]></bpmn:script>
     <bpmn:textAnnotation id="TextAnnotation_0v3u7qw">    <bpmn:text><![CDATA[sets 'eventMessage' process Variable]]></bpmn:text>
 </bpmn:textAnnotation>
     <bpmn:association id="Association_05gycll" sourceRef="IntermediateCatchEvent_199v7vk" targetRef="TextAnnotation_0v3u7qw" />
-    <bpmn:textAnnotation id="TextAnnotation_10xh9id">    <bpmn:text>Triggers buffered events delivery in Execution Listener</bpmn:text>
+    <bpmn:textAnnotation id="TextAnnotation_10xh9id">    <bpmn:text>Triggers buffered events delivery through a Start-ExecutionListener</bpmn:text>
 </bpmn:textAnnotation>
     <bpmn:association id="Association_0zyk58f" sourceRef="IntermediateCatchEvent_199v7vk" targetRef="TextAnnotation_10xh9id" />
   </bpmn:process>
-  <bpmn:message id="Message_129fcmh" name="generic-event" />
+  <bpmn:message id="Message_129fcmh" name="generic-event-1a" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="generic-buffered-process">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="example_buffProcces_beforeInst">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="456" y="316" width="36" height="36" />
         <bpmndi:BPMNLabel>
