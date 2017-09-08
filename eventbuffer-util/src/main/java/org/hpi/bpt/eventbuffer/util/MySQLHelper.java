@@ -62,6 +62,7 @@ public class MySQLHelper {
 				result = rs.getString(1);
 			}
 			st.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Error while retrieving buffered events from mysql: " + e.getMessage());
@@ -86,6 +87,7 @@ public class MySQLHelper {
 			st.execute(sqlStatement);
 
 			st.close();
+			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Error while removing events from mysql: " + e.getMessage());

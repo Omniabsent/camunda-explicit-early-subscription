@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.6.0">
-  <bpmn:process id="example_buffProcces_beforeInst" name="(1A) Generic Buffered Process (&#60; Pr. Inst)" isExecutable="true">
+  <bpmn:process id="example_buffProcces_beforeInst" name="(Ch. 4) Generic Buffered Process (before Pr. Inst)" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1" name="Generic Process Start Event">
       <bpmn:outgoing>SequenceFlow_1n8qkg5</bpmn:outgoing>
     </bpmn:startEvent>
@@ -80,18 +80,18 @@ println eventMessage]]></bpmn:script>
         <dc:Bounds x="723" y="294" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0v3u7qw_di" bpmnElement="TextAnnotation_0v3u7qw">
-        <dc:Bounds x="638" y="184" width="129" height="57" />
+        <dc:Bounds x="618" y="236" width="129" height="57" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_05gycll_di" bpmnElement="Association_05gycll">
-        <di:waypoint xsi:type="dc:Point" x="611" y="316" />
-        <di:waypoint xsi:type="dc:Point" x="678" y="241" />
+        <di:waypoint xsi:type="dc:Point" x="625" y="321" />
+        <di:waypoint xsi:type="dc:Point" x="654" y="293" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="TextAnnotation_10xh9id_di" bpmnElement="TextAnnotation_10xh9id">
-        <dc:Bounds x="459" y="186" width="140" height="53" />
+        <dc:Bounds x="458" y="233" width="142" height="63" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_0zyk58f_di" bpmnElement="Association_0zyk58f">
-        <di:waypoint xsi:type="dc:Point" x="600" y="319" />
-        <di:waypoint xsi:type="dc:Point" x="546" y="239" />
+        <di:waypoint xsi:type="dc:Point" x="596" y="321" />
+        <di:waypoint xsi:type="dc:Point" x="565" y="296" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

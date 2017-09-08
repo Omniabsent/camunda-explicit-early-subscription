@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.6.0">
-  <bpmn:process id="example_buffProcess_afterInst" name="(2A) Generic Buffered Process (&#62; Pr. Inst)" isExecutable="true">
+  <bpmn:process id="example_buffProcess_afterInst" name="(Ch. 4) Generic Buffered Process (after Pr. Inst)" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1" name="Start Process">
       <bpmn:outgoing>SequenceFlow_03whhia</bpmn:outgoing>
     </bpmn:startEvent>
@@ -23,13 +23,13 @@ println "Task completed."]]></bpmn:script>
       <bpmn:outgoing>SequenceFlow_17w476b</bpmn:outgoing>
       <bpmn:messageEventDefinition messageRef="Message_1dzubf1" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_17w476b" sourceRef="IntermediateCatchEvent_1100kp3" targetRef="Task_1qtnwbc" />
+    <bpmn:sequenceFlow id="SequenceFlow_17w476b" sourceRef="IntermediateCatchEvent_1100kp3" targetRef="Task_073tanz" />
     <bpmn:endEvent id="EndEvent_18jbixq" name="Process End">
       <bpmn:incoming>SequenceFlow_1ho2dcg</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1ho2dcg" sourceRef="Task_1qtnwbc" targetRef="EndEvent_18jbixq" />
     <bpmn:scriptTask id="Task_1qtnwbc" name="Display Message information" scriptFormat="groovy">
-      <bpmn:incoming>SequenceFlow_17w476b</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1949ljg</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1ho2dcg</bpmn:outgoing>
       <bpmn:script><![CDATA[println "Received event-message:"
 println eventMessage]]></bpmn:script>
@@ -43,6 +43,11 @@ println eventMessage]]></bpmn:script>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_03whhia</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1kx3bh6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1949ljg" sourceRef="Task_073tanz" targetRef="Task_1qtnwbc" />
+    <bpmn:serviceTask id="Task_073tanz" name="Stop buffering process" camunda:expression="${execution.getProcessEngineServices().getRuntimeService().createMessageCorrelation(&#34;unsubscribe&#34;).correlateWithResult()}">
+      <bpmn:incoming>SequenceFlow_17w476b</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1949ljg</bpmn:outgoing>
     </bpmn:serviceTask>
   </bpmn:process>
   <bpmn:message id="Message_1dzubf1" name="generic-event-2a" />
@@ -73,26 +78,26 @@ println eventMessage]]></bpmn:script>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_17w476b_di" bpmnElement="SequenceFlow_17w476b">
         <di:waypoint xsi:type="dc:Point" x="746" y="243" />
-        <di:waypoint xsi:type="dc:Point" x="794" y="243" />
+        <di:waypoint xsi:type="dc:Point" x="777" y="243" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="770" y="228" width="0" height="0" />
+          <dc:Bounds x="762" y="228" width="0" height="0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_18jbixq_di" bpmnElement="EndEvent_18jbixq">
-        <dc:Bounds x="946" y="225" width="36" height="36" />
+        <dc:Bounds x="1083" y="225" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="932" y="261" width="63" height="12" />
+          <dc:Bounds x="1069" y="261" width="63" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1ho2dcg_di" bpmnElement="SequenceFlow_1ho2dcg">
-        <di:waypoint xsi:type="dc:Point" x="894" y="243" />
-        <di:waypoint xsi:type="dc:Point" x="946" y="243" />
+        <di:waypoint xsi:type="dc:Point" x="1013" y="243" />
+        <di:waypoint xsi:type="dc:Point" x="1083" y="243" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="920" y="228" width="0" height="0" />
+          <dc:Bounds x="1048" y="228" width="0" height="0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ScriptTask_0htgwrm_di" bpmnElement="Task_1qtnwbc">
-        <dc:Bounds x="794" y="203" width="100" height="80" />
+        <dc:Bounds x="913" y="203" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_07vvbjy_di" bpmnElement="SequenceFlow_07vvbjy">
         <di:waypoint xsi:type="dc:Point" x="658" y="243" />
@@ -110,6 +115,16 @@ println eventMessage]]></bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_155m1qg_di" bpmnElement="Task_0f40in3">
         <dc:Bounds x="398" y="203" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1949ljg_di" bpmnElement="SequenceFlow_1949ljg">
+        <di:waypoint xsi:type="dc:Point" x="877" y="243" />
+        <di:waypoint xsi:type="dc:Point" x="913" y="243" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="895" y="228" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1jsn7qq_di" bpmnElement="Task_073tanz">
+        <dc:Bounds x="777" y="203" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

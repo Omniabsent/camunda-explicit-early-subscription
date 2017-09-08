@@ -54,14 +54,14 @@
         <dc:Bounds x="428" y="216" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataStoreReference_1k2mlds_di" bpmnElement="DataStoreReference_1k2mlds">
-        <dc:Bounds x="453" y="362" width="50" height="50" />
+        <dc:Bounds x="453" y="139" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="444" y="412" width="67" height="24" />
+          <dc:Bounds x="445" y="109" width="65" height="24" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1w07v32_di" bpmnElement="DataOutputAssociation_1w07v32">
-        <di:waypoint xsi:type="dc:Point" x="478" y="296" />
-        <di:waypoint xsi:type="dc:Point" x="478" y="362" />
+        <di:waypoint xsi:type="dc:Point" x="478" y="216" />
+        <di:waypoint xsi:type="dc:Point" x="478" y="189" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="IntermediateThrowEvent_0lqbzwh_di" bpmnElement="IntermediateThrowEvent_01hh7n2">
         <dc:Bounds x="628" y="238" width="36" height="36" />

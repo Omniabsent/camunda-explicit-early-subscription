@@ -31,14 +31,11 @@
       <bpmn:outgoing>SequenceFlow_1u2ia09</bpmn:outgoing>
     </bpmn:receiveTask>
     <bpmn:sequenceFlow id="SequenceFlow_1u2ia09" sourceRef="Task_12nk9br" targetRef="EndEvent_0fdaoro" />
-    <bpmn:textAnnotation id="TextAnnotation_16zufff">    <bpmn:text>should implicitely set ref_processDefinitionId and ref_messageName</bpmn:text>
+    <bpmn:textAnnotation id="TextAnnotation_16zufff">    <bpmn:text>should implicitely set ref_processDefinitionId and ref_messageName to allow correlation</bpmn:text>
 </bpmn:textAnnotation>
     <bpmn:association id="Association_1055ycd" sourceRef="StartEvent_1" targetRef="TextAnnotation_16zufff" />
     <bpmn:textAnnotation id="TextAnnotation_1vp6wn3">    <bpmn:text><![CDATA[Sets 'eventBody' processVariable]]></bpmn:text>
 </bpmn:textAnnotation>
-    <bpmn:textAnnotation id="TextAnnotation_0b9ugbe">    <bpmn:text>correlate via fixed messageName and ID of the buffering process instance</bpmn:text>
-</bpmn:textAnnotation>
-    <bpmn:association id="Association_1j2s457" sourceRef="Task_0v3tco3" targetRef="TextAnnotation_0b9ugbe" />
     <bpmn:association id="Association_0dnm197" sourceRef="BoundaryEvent_0zh8cs6" targetRef="TextAnnotation_1vp6wn3" />
   </bpmn:process>
   <bpmn:message id="Message_075p6qa" name="unsubscribe" />
@@ -92,13 +89,6 @@
       <bpmndi:BPMNShape id="TextAnnotation_1vp6wn3_di" bpmnElement="TextAnnotation_1vp6wn3">
         <dc:Bounds x="467" y="79" width="100" height="51" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0b9ugbe_di" bpmnElement="TextAnnotation_0b9ugbe">
-        <dc:Bounds x="305" y="241" width="124" height="71" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_1j2s457_di" bpmnElement="Association_1j2s457">
-        <di:waypoint xsi:type="dc:Point" x="367" y="210" />
-        <di:waypoint xsi:type="dc:Point" x="368" y="241" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_0fdaoro_di" bpmnElement="EndEvent_0fdaoro">
         <dc:Bounds x="853.145" y="152" width="36" height="36" />
         <bpmndi:BPMNLabel>
