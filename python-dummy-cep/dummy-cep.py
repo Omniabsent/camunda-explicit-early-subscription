@@ -67,14 +67,20 @@ def interpretLine(userinput):
 		global runProgram
 		runProgram = False
 	elif userinput == 'ls':
-		print (listSubscriptions)		
+		i = 0
+		for entry in listSubscriptions:
+			print(str(i) + ': ' + str(entry))
+			i = i+1
 	elif re.match('\d+ .+', userinput):
 		subscriptionIndex = int(userinput[:userinput.find(' ')])
-		message = userinput[(userinput.find(' ')+1):]
-		
-		# post to camunda
-		subscription = listSubscriptions[subscriptionIndex] 
-		postMessageToSubscription(subscription, message)
+		if subscriptionIndex in range(0,len(listSubscriptions)):
+			message = userinput[(userinput.find(' ')+1):]
+			
+			# post to camunda
+			subscription = listSubscriptions[subscriptionIndex] 
+			postMessageToSubscription(subscription, message)
+		else:
+			print('invalid list index')
 	elif userinput == '':
 		True #do nothing
 	else:
